@@ -279,8 +279,20 @@ def about():
     return render_template("about.html", logged_in=current_user.is_authenticated)
 
 
-@app.route("/contact")
+def send_email(email, message):
+    my_email = # FILL THIS LATER
+    users_email = email
+    users_msg = message
+    
+
+@app.route("/contact", methods=['GET', 'POST'])
 def contact():
+    contact_form = ContactForm()
+    if contact_form.validate_on_submit(): # If a POST request is made...
+        user_name = contact_form.name.data
+        user_email = contact_form.email.data
+        user_msg = contact_form.message.data
+        send_email(user_email, user_msg) # DO THE SEND EMAIL function
     return render_template("contact.html", logged_in=current_user.is_authenticated)
 
 

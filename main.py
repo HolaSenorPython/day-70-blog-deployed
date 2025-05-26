@@ -10,7 +10,7 @@ from sqlalchemy import Integer, String, Text, ForeignKey
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 # Import your forms from the forms.py
-from forms import CreatePostForm, RegisterUserForm, LoginForm, CommentForm
+from forms import CreatePostForm, RegisterUserForm, LoginForm, CommentForm, ContactForm
 import os
 
 '''

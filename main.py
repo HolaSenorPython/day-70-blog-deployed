@@ -278,12 +278,31 @@ def delete_post(post_id):
 def about():
     return render_template("about.html", logged_in=current_user.is_authenticated)
 
-
-def send_email(email, message):
-    my_email = # FILL THIS LATER
+# THIS FUNCTION HANDLES THE CONTACT FORM AND SENDING ME MESSAGES
+def send_email(name, email, message):
+    my_email = os.environ.get('MY_EMAIL_FOR_USER')
+    my_pass = os.environ.get('MY_PASS_FOR_USER')
     users_email = email
     users_msg = message
-    
+    users_name = name
+    try:
+        with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+            connection.starttls()
+            connection.login(user=my_email, password=my_pass)
+            connection.sendmail(
+                from_addr=my_email,
+                to_addrs=my_email,
+                msg=f"""Subject: You've got a contact form message from {users_name}!\n\n
+Name: {users_name}
+Email: {users_email}
+            
+User's message: {message}
+"""
+        )
+        return True
+    except Exception as e:
+        print(f"Error sending email: {e}")
+        return False
 
 @app.route("/contact", methods=['GET', 'POST'])
 def contact():
@@ -292,9 +311,14 @@ def contact():
         user_name = contact_form.name.data
         user_email = contact_form.email.data
         user_msg = contact_form.message.data
-        send_email(user_email, user_msg) # DO THE SEND EMAIL function
+        email_sent = send_email(user_name, user_email, user_msg) # DO THE SEND EMAIL function
+        if email_sent:
+            flash("Successfully sent email! Elisha will get back to you shortly. 😏🥳🎉", "success")
+            return redirect(url_for('contact'))
+        else:
+            flash("Oops! Something went wrong while trying to send your email. 🥴😵‍💫", "error")
+            return redirect(url_for('contact'))
     return render_template("contact.html", logged_in=current_user.is_authenticated)
-
 
 if __name__ == "__main__":
     app.run(debug=False)

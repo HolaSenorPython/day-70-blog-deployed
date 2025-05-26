@@ -318,7 +318,7 @@ def contact():
         else:
             flash("Oops! Something went wrong while trying to send your email. 🥴😵‍💫", "error")
             return redirect(url_for('contact'))
-    return render_template("contact.html", logged_in=current_user.is_authenticated)
+    return render_template("contact.html", logged_in=current_user.is_authenticated, form=contact_form)
 
 if __name__ == "__main__":
     app.run(debug=False)

@@ -323,7 +323,7 @@ def contact():
 
 @app.route('/secret')
 def secret_page():
-    return render_template("secret.html")
+    return render_template("secret.html", logged_in=current_user.is_authenticated)
     
 if __name__ == "__main__":
     app.run(debug=False)

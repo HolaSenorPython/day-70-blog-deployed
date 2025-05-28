@@ -322,7 +322,7 @@ def contact():
     return render_template("contact.html", logged_in=current_user.is_authenticated, form=contact_form)
 
 @app.route('/secret')
-def secret_page()
+def secret_page():
     return render_template("secret.html")
     
 if __name__ == "__main__":

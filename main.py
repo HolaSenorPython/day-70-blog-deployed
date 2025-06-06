@@ -296,7 +296,8 @@ def send_email(name, email, message):
                 msg=f"""Subject: You've got a contact form message from {users_name}!\n\n
 Name: {users_name}
 Email: {users_email}
-            
+Location: Blog Website
+
 User's message: {message}
 """
         )
